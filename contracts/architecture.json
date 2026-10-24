@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "required_directories": [
+    "contracts",
+    "services",
+    "infra",
+    "scripts",
+    "docs",
+    "tests",
+    "tools",
+    "skills"
+  ],
+  "required_files": [
+    "AGENTS.md",
+    "README.md",
+    ".gitignore",
+    ".dockerignore",
+    "infra/docker/Dockerfile",
+    "contracts/scripts.json",
+    "contracts/sample-request.schema.json",
+    "docs/init.md"
+  ],
+  "dependency_direction": "shell -> core",
+  "sample_core_allowed_imports": [],
+  "validation_scope": "Directory and entrypoint contracts, common secret patterns, and Python sample imports. Not a proof of purity or complete secret detection."
+}

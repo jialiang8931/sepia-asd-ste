@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sample total quantity request",
+  "type": "object",
+  "required": [
+    "quantities"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "quantities": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "arguments_allowed": false,
+  "entrypoints": {
+    "validate.sh": "Validate repository rules and run sample tests in Docker.",
+    "test.sh": "Run sample tests in Docker."
+  },
+  "production_deployment": "Not implemented. Add only after targets and permissions are approved."
+}

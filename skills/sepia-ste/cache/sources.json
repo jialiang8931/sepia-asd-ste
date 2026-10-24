@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "cached_on": "2026-10-24",
+  "cache_kind": "editorial_summaries_not_full_standard",
+  "refresh_policy": "Explicit user refresh only. Recheck upstream sources and hashes, update affected summaries, validate the skill, then update this record. Do not overwrite user customizations silently.",
+  "sepia": {
+    "version": "0.2.0",
+    "sha256": {
+      "SKILL.md": "d6486479152c58e96a751b6ebed8ace5c46e1ca476d3035080df1993cc46a121",
+      "references/professional-pass.md": "dc4f6708a1b5f40477bf4845c336ffa12dbfa4e1e20a2b6e036fae5fe3645b2c",
+      "references/style-pass.md": "7d65d89c62f306153316114c29544aa119bc3c5656cc965c5680a4829633b8e6"
+    },
+    "coverage": "Compact professional baseline derived from Sepia 0.2.0; original skill not bundled. Hashes identify sources, not installed dependencies.",
+    "upstream": "https://github.com/cursor/plugins/tree/main/pstack"
+  },
+  "ste": {
+    "edition": "Issue 9, January 2025",
+    "official_sources": [
+      "https://www.asd-ste100.org/about_STE.html",
+      "https://www.asd-ste100.org/STE_faq.html",
+      "https://asd-ste100.org/STE_downloads.html",
+      "https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf"
+    ],
+    "verification": "Official indexed pages and rule excerpts; direct PDF retrieval returned HTTP 403 during research. No exhaustive standard or dictionary review.",
+    "full_standard_cached": false,
+    "dictionary_cached": false,
+    "compliance_authority": false
+  }
+}
