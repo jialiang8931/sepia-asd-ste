@@ -14,7 +14,7 @@
     "AGENTS.md",
     "README.md",
     ".gitignore",
-    ".dockerignore",
+    "infra/docker/Dockerfile.dockerignore",
     "infra/docker/Dockerfile",
     "contracts/scripts.json",
     "contracts/sample-request.schema.json",

@@ -108,7 +108,7 @@ def inspect_repository(root: Path) -> tuple[str, ...]:
                 findings.append(f"{relative}: script must be executable")
         if relative.parts[:2] == ("services", "sample") and "core" in relative.parts and path.suffix == ".py":
             findings.extend(check_core(relative.as_posix(), content, allowed_imports))
-    for filename in (".gitignore", ".dockerignore"):
+    for filename in (".gitignore", "infra/docker/Dockerfile.dockerignore"):
         content = (root / filename).read_text()
         for required in (".aws", ".env", "*.pem", "*.key", "*.tfstate", "*.tfplan"):
             if required not in content:
