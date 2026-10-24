@@ -46,11 +46,19 @@ HOME 與 PATH 等作業系統定位，以及受管理環境必要的 proxy/CA �
 
 ## Docker 驗證
 
-主機只需 Git、Docker 及 POSIX shell。不得要求主機安裝 Python、Node、Go、Java、Terraform 或 AWS CLI。開發、測試、打包及基礎設施工具執行都經 Docker；本機與 CI 使用相同腳本。
+主機只需 Git、Docker 及 POSIX shell。不得要求主機安裝 Python、Node、Go、Java、Terraform 或 AWS CLI。開發、測試、打包及基礎設施工具執行都經本機 Docker，由使用者明確啟動。
 
 依賴鎖版，基礎映像固定 digest，明確指定建置內容。不得把 repo 外的資料當 build context。驗證容器預設非 root、唯讀、無網路、無多餘 capabilities，必要暫存使用短生命週期空間。網路整合測試另訂隔離及權限，不擅自開放。
 
 測試必須包含核心規則、邊界契約與失敗路徑。新增語言時同步提供 Docker 工具鏈、鎖檔、語言相依方向檢查及測試；Python 範例不是其他語言已驗證的證據。不要宣稱結構檢查已證明所有函數純度。
+
+## 禁止擅自新增 CI/CD
+
+本 repo 以單人使用及本機 Docker 驗證為準。GitHub 只保存來源、文件與版本標籤；GitHub Actions 維持停用，不包含 workflow。
+
+未取得使用者當次明確核准，不得新增、啟用或修改任何 CI/CD，包括 GitHub Actions、其他代管平台、self-hosted runner、webhook、排程與背景自動化。不得把 Docker 驗證、commit、push、tag 或建立 repo 的授權解讀為 CI/CD 授權，也不得改用本機常駐程序或 Git hook 自動觸發。
+
+驗證使用 `./scripts/validate.sh`，測試使用 `./scripts/test.sh`。驗證、提交、推送與部署各自獨立，不自動串接。若未來需要 CI/CD，先提出目的、觸發條件、執行位置、資源用量、權限及停止方式，經核准後再實作。
 
 ## AWS 與機敏資訊
 

@@ -8,13 +8,15 @@
 ./scripts/validate.sh
 ```
 
-此入口先使用鎖定映像的 Gitleaks 掃描機敏資訊，再在 Docker 內檢查目錄、腳本契約及範例相依方向，最後執行測試。掃描結果不代表可保證識別所有秘密。只執行測試：
+此入口先使用鎖定映像的 Gitleaks 掃描機敏資訊，再在本機 Docker 內檢查目錄、腳本契約及範例相依方向，最後執行測試。掃描結果不代表可保證識別所有秘密。只執行測試：
 
 ```sh
 ./scripts/test.sh
 ```
 
 兩個入口均不接受任何參數。第一次執行需取得鎖定的官方 Python 與 Gitleaks Docker 映像。主機不需要安裝 Python 或 Gitleaks。
+
+此 repo 僅保留手動啟動的本機 Docker 驗證。GitHub Actions 已停用，沒有 CI/CD workflow。未經當次明確核准，不得新增或啟用 CI/CD，也不得在 push、tag 或本機 Git hook 中自動觸發驗證或部署。
 
 ## 架構
 
@@ -42,7 +44,6 @@ docs/
   aws.md
   reuse.md
 skills/sepia-ste/
-.github/workflows/validate.yml
 ```
 
 先讀 `AGENTS.md`，再填寫 `docs/init.md`。相依方向固定為 shell 到 core。規範跨語言，現有自動檢查只覆蓋列出的結構、Shell 規則與 Python 範例；新增語言需要補齊檢查。

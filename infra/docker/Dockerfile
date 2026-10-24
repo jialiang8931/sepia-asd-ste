@@ -10,6 +10,5 @@ COPY scripts ./scripts
 COPY docs ./docs
 COPY infra ./infra
 COPY skills ./skills
-COPY .github ./.github
 USER 65532:65532
 CMD ["python", "-B", "-m", "tools.validate_repository"]
