@@ -1,18 +1,18 @@
-# 腳本入口契約
+# 本 repo 的操作入口
 
-公開入口只有 `contracts/scripts.json` 列出的檔案。
+現有入口以 `contracts/scripts.json` 為準，只操作本 repo 的驗證及既有示範，不調度其他專案。
 
 | 指令 | 唯一目的 | 接受參數 |
 | --- | --- | --- |
-| `./scripts/validate.sh` | 在 Docker 驗證範本規範與測試 | 無 |
-| `./scripts/test.sh` | 在 Docker 執行測試 | 無 |
+| `./scripts/validate.sh` | 在本機 Docker 掃描、檢查及驗證本 repo | 無 |
+| `./scripts/test.sh` | 在本機 Docker 執行既有測試 | 無 |
 
-腳本必須在任何副作用前拒絕所有參數。工作目錄不影響行為。沒有 `MODE`、`ENV`、`RUN_TESTS` 等隱藏的行為選擇器，也沒有任意命令轉傳。
+兩個入口在任何副作用前拒絕參數，不依賴呼叫工作目錄。沒有 MODE、ENV、RUN_TESTS 等行為選擇器，也沒有任意命令轉傳。
 
-允許的前置驗證必須服務腳本唯一目的。例如未來的 `deploy_to_production.sh` 可以先檢查部署目標、身份與核准狀態，但不能藉參數改成測試工具或部署到 staging。腳本內的固定 Docker 參數不是使用者可調度的公開模式。
+單一用途允許必要的前置驗證，但不允許以 `deploy_to_production.sh --run-tests`、`deploy.sh production`、`ENV=prod deploy.sh` 或 `prod.env deploy_to_production.sh` 混合或隱藏行為。這些部署名稱只是規則示例，本 repo 沒有部署入口。
 
-未來新增行為時，先取得允許，再新增名稱清楚的獨立入口，同步更新契約、測試與本表。不要預建未能執行的 deploy 腳本。
+固定的 Docker 工具選項不是可切換的公開模式。Dockerfile 與專用 ignore 檔均在 infra/docker/，build context 明確指定為 repo root。
 
-本機需要 Docker daemon 可用及映像下載權限。工具不會自動安裝 Docker、不會執行 sudo，也不會關閉 TLS 驗證。執行失敗時保留非零 exit code，說明缺少的前置條件。
+執行入口需要 Docker daemon 與首次下載映像的權限。本機允許安裝 Docker、AWS CLI、Git，Python、Terraform、Gitleaks 及其他開發工具走容器。腳本不自動安裝工具、不執行 sudo、不關閉 TLS，也不把失敗隱藏成成功。
 
-範本的腳本檢查只攔截部分已知模式，不能替代 Shell 語意審查。新增入口仍需人工確認沒有隱藏環境調度。
+現有腳本與檢查不代表其他專案必須採用。不為完整性增加新入口、dispatcher、Git hook 或背景自動化。沒有明確需求與授權時不新增流程。

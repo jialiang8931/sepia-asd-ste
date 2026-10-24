@@ -1,57 +1,70 @@
 # sepia-asd-ste
 
-跨語言專案範本，採 Functional Core, Imperative Shell。主機只需 Git、Docker 及 POSIX shell。內附 Python 最小範例，示範架構，不限定正式專案語言。
+Sepia／STE 寫作輔助技能與開發規範參考庫，供個人按需取用，不是主導專案開發的框架。
 
-## 驗證範本
+## 輔助用途
+
+主要內容在 `skills/sepia-ste/`。一般寫作以 Sepia 摘要為主，技術與操作文件按需加入 STE 原則；嚴格 STE 只有明確要求時啟用。摘要不是完整標準或字典，不宣稱完整 ASD-STE100 合規。
+
+FP、imperative shell、目錄、Docker、Terraform、AWS 與 scripts 文件供架構參考。使用寫作技能不代表整套導入；目標專案自己的需求、契約與 AGENTS.md 才是開發依據。本 repo 不自動覆寫它們，也不接管測試、部署或 Git。
+
+## 內容配置
+
+根目錄只有 AGENTS.md、README.md、.gitignore 三個檔案。其餘內容放在資料夾：
+
+```text
+AGENTS.md
+README.md
+.gitignore
+contracts/
+services/sample/
+  core/
+  shell/
+infra/
+  docker/
+    Dockerfile
+    Dockerfile.dockerignore
+  terraform/
+    README.md
+  deployments/production/
+    README.md
+scripts/
+  validate.sh
+  test.sh
+tests/
+tools/
+docs/
+skills/sepia-ste/
+```
+
+`services/sample/` 是既有 Python 示範，不是應用程式必備骨架。`infra/terraform/` 目前只有存取及執行邊界說明，沒有資源、工具映像或 plan/apply 入口。部署文件不是後續開發計畫。
+
+實際專案的架構配置與 Git 規範參考 `docs/architecture.md`；不為完整性建立空目錄或新增功能。
+
+## 本機驗證
+
+單純閱讀文件或使用寫作技能，不需要執行本 repo 的驗證。維護本 repo 時，可明確執行：
 
 ```sh
 ./scripts/validate.sh
 ```
 
-此入口先使用鎖定映像的 Gitleaks 掃描機敏資訊，再在本機 Docker 內檢查目錄、腳本契約及範例相依方向，最後執行測試。掃描結果不代表可保證識別所有秘密。只執行測試：
+既有入口先在 Docker 使用鎖定的 Gitleaks 映像掃描，再檢查本 repo 的結構、腳本與 Python 範例，最後執行測試。它不是其他專案的開發閘門。只執行既有測試：
 
 ```sh
 ./scripts/test.sh
 ```
 
-兩個入口均不接受任何參數。第一次執行需取得鎖定的官方 Python 與 Gitleaks Docker 映像。主機不需要安裝 Python 或 Gitleaks。
+兩個入口都不接受參數，第一次執行需要 Docker 映像下載權限。本機允許安裝 Docker、AWS CLI、Git；其他開發工具走容器，不要求主機安裝 Python、Terraform 或 Gitleaks。這兩個入口不需要 AWS 身份，不讀取或掛載 `~/.aws`。
 
-此 repo 僅保留手動啟動的本機 Docker 驗證。GitHub Actions 已停用，沒有 CI/CD workflow。未經當次明確核准，不得新增或啟用 CI/CD，也不得在 push、tag 或本機 Git hook 中自動觸發驗證或部署。
+GitHub Actions 維持停用，沒有 workflow。不自動串接驗證、commit、push、tag 或部署，未經明確核准不新增 CI/CD。
 
-## 架構
+## 開發與重用
 
-```text
-AGENTS.md
-contracts/
-  architecture.json
-  scripts.json
-  sample-request.schema.json
-services/sample/
-  core/
-  shell/
-infra/
-  docker/Dockerfile
-  deployments/production/README.md
-scripts/
-  validate.sh
-  test.sh
-tools/validate_repository.py
-tests/
-docs/
-  init.md
-  architecture.md
-  scripts.md
-  aws.md
-  reuse.md
-skills/sepia-ste/
-```
+日常工作從 dev 開符合用途的分支。沒有 dev 時，從 main 建立 dev；遠端已有 dev 時沿用遠端分支。release 只用於核准的正式上線發布，合併 main/master 需要明確允許。
 
-先讀 `AGENTS.md`，再填寫 `docs/init.md`。相依方向固定為 shell 到 core。規範跨語言，現有自動檢查只覆蓋列出的結構、Shell 規則與 Python 範例；新增語言需要補齊檢查。
+Commit 使用 `<type>(<file>): <中文描述>`，例如 `docs(AGENTS.md): 補充分支與提交規範`。詳見 `AGENTS.md`。
 
-## 重複使用
+優先取用需要的技能與文件，不必複製整個 repo 或重排既有專案。GitHub 的 Use this template 是可選方式，不代表整套規範自動適用。詳見 `docs/reuse.md`。
 
-可透過 GitHub 的 Use this template 建立自己的 repo。每個新專案都會得到獨立歷史，不會自動同步後續範本變更。詳見 `docs/reuse.md`。
-
-內附 `skills/sepia-ste`，不需要連回作者機器。一般回答使用 Sepia 摘要，技術文件按需加入 STE；嚴格模式必須明確要求。沒有完整標準與字典，不宣稱 ASD-STE100 合規。
-
-範本沒有真實部署、AWS 帳號、憑證或客戶資料。production 部署尚未實作，不存在假成功的部署入口。`0.0.0` 與 `latest` 是 Git 標籤，與部署狀態無關。
+`0.0.0`、`latest` 保留歷史版本，仍包含最初的 workflow。此輪架構與定位更新位於 `docs/clarify-auxiliary-structure`，尚未合併 dev、main 或 master；dev 只完成從 main 初始化。標籤不移動、不重建，也不代表部署完成。
